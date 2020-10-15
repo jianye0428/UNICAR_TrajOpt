@@ -1,28 +1,3 @@
-/**
- * @file pick_and_place_example.cpp
- * @brief Pick and place implementation
- *
- * @author Levi Armstrong
- * @date July 22, 2019
- * @version TODO
- * @bug No known bugs
- *
- * @copyright Copyright (c) 2017, Southwest Research Institute
- *
- * @par License
- * Software License Agreement (Apache License)
- * @par
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * @par
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 #include <tesseract_common/macros.h>
 #include <iostream>
 TESSERACT_COMMON_IGNORE_WARNINGS_PUSH
@@ -345,8 +320,6 @@ bool PickAndPlaceExample::run()
   msg_pick.data = true;
   signal_pick.publish(msg_pick);
 
-
-
   /////////////
   /// PLACE ///
   /////////////
@@ -390,7 +363,6 @@ bool PickAndPlaceExample::run()
   //position_1.linear() = Eigen::Quaterniond(1, 0, 0, 0).matrix();
   position_1.linear() = Eigen::Quaterniond(1, 0, 0, 0).matrix();
   position_1.translation() = Eigen::Vector3d(-0.6,-0.6,1.0);// the place position in container
-
 
   // Set the target pose in container
   final_pose = position_1;
@@ -502,31 +474,6 @@ bool PickAndPlaceExample::run()
   pose_constraint_->rot_coeffs = Eigen::Vector3d(10, 10, 10);
   pose_constraint_->name = "pose_extra_" + std::to_string(2 * steps_ -1);
   pci_place.cnt_infos.push_back(pose_constraint_);
-
-//*******************origin******************************
-//  int steps = 3 * steps_ - 2 * steps_;
-//  for (int index = 0; index < steps; index++)
-//  {
-
-//    Eigen::Quaterniond rotation(final_pose.linear());
-//    auto pose_constraint = std::make_shared<trajopt::CartPoseTermInfo>();
-//    pose_constraint->term_type = trajopt::TT_CNT;
-//    pose_constraint->link = link_box_name;
-//    pose_constraint->timestep = 2 * steps_ + index;
-//    //pose_constraint->xyz = Eigen::Vector3d(-0.8, -1.4, 0.45);
-//    pose_constraint->xyz = approach_pose.translation();
-//    //pose_constraint->xyz.y() = approach_pose.translation().y() + 0.1 / (steps - 1) * index;
-//    //pose_constraint->xyz.x()= approach_pose.translation().x()+ 0.1 / (steps - 1) * index;
-////  pose_constraint->xyz.z()= approach_pose.translation().z()+ 0.1 / (steps - 1) * index;
-
-//    pose_constraint->wxyz = Eigen::Vector4d(rotation.w(), rotation.x(), rotation.y(), rotation.z());
-//    //pose_constraint->wxyz = Eigen::Vector4d(1, 0, 0, 0);
-//    pose_constraint->pos_coeffs = Eigen::Vector3d(10, 10, 10);
-//    pose_constraint->rot_coeffs = Eigen::Vector3d(10, 10, 10);
-//    pose_constraint->name = "pose_" + std::to_string(2 * steps_ + index);
-//    pci_place.cnt_infos.push_back(pose_constraint);
-//  }
-//*******************origin******************************
 
   // Add a cost on the total time to complete the pick
   if (ENABLE_TIME_COST)
