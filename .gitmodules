@@ -1,3 +1,15 @@
 [submodule "src/universal_robot"]
 	path = src/universal_robot
 	url = https://github.com/ros-industrial/universal_robot.git
+[submodule "src/tesseract"]
+	path = src/tesseract
+	url = https://github.com/ros-industrial-consortium/tesseract.git
+[submodule "src/trajopt_ros"]
+	path = src/trajopt_ros
+	url = https://github.com/ros-industrial-consortium/trajopt_ros.git
+[submodule "src/tesseract_ros"]
+	path = src/tesseract_ros
+	url = https://github.com/ros-industrial-consortium/tesseract_ros.git
+[submodule "src/simExtROSInterface"]
+	path = src/simExtROSInterface
+	url = https://github.com/CoppeliaRobotics/simExtROSInterface.git
