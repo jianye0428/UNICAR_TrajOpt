@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+ <!-- The name of the parameter under which the URDF is loaded -->
+  <arg name="model" default="$(find pick_and_place_support)/urdf/pick_and_place.urdf"/>
+  <arg name="gui" default="True"/>
+  <arg name="rviz" default="true"/>
+
+
+  <!-- Load universal robot description format (URDF) -->
+  <param name="robot_description" textfile="$(find pick_and_place_support)/urdf/pick_and_place.urdf" />
+
+  <param name="use_gui" value="$(arg gui)"/>
+
+
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="pick_and_place_test_rviz"
+        args="-d $(find pick_and_place_support)/config/view_robot.rviz" />
+
+
+</launch>

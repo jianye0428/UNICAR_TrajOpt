@@ -1,0 +1,114 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="carbody_ur10_robot">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group.
+    Additionally, all the joints that are parents to included links are also included.
+    This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="Manipulator">
+        <chain base_link="world" tip_link="greifer_link" />
+    </group>
+
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="world" type="fixed" parent_frame="world_frame" child_link="world" />
+    <group_state name="AllZero" group="Manipulator">
+        <joint name="drehkranz_joint" value="0" />
+        <joint name="shoulder_pan_joint" value="0" />
+        <joint name="shoulder_lift_joint" value="0" />
+        <joint name="elbow_joint" value="0" />
+        <joint name="wrist_1_joint" value="0" />
+        <joint name="wrist_2_joint" value="0" />
+        <joint name="wrist_3_joint" value="0" />
+    </group_state>
+    <!--<links: carbody_link drehkranz_link  base_link shoulder_link upper_arm_link forearm_link wrist_1_link wrist_2_link
+                wrist_3_link ee_link container_link table_link conveyBelt_link box_link>-->
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot.
+    This tag disables collision checking between a specified pair of links. -->
+
+<!--    <carbody_link>-->
+    <disable_collision link1="carbody_link" link2="drehkranz_link" reason="Adjacent"/>
+    <disable_collision link1="carbody_link" link2="container_link" reason="Never"/>
+    <disable_collision link1="carbody_link" link2="base_link" reason="Never"/>
+    <disable_collision link1="carbody_link" link2="shoulder_link" reason="Never"/>
+    <disable_collision link1="carbody_link" link2="upper_arm_link" reason="Never"/>
+    <disable_collision link1="carbody_link" link2="table_link" reason="Never"/>
+    <disable_collision link1="carbody_link" link2="conveyBelt_link" reason="Never"/>
+    <disable_collision link1="carbody_link" link2="box_link" reason="Never"/>-->
+    <!--<drehkranz_link>-->
+    <disable_collision link1="drehkranz_link" link2="base_link" reason="Adjacent"/>
+    <disable_collision link1="drehkranz_link" link2="shoulder_link" reason="Never"/>
+    <disable_collision link1="drehkranz_link" link2="table_link" reason="Never"/>
+    <disable_collision link1="drehkranz_link" link2="conveyBelt_link" reason="Never"/>
+    <disable_collision link1="drehkranz_link" link2="box_link" reason="Never"/>
+    <disable_collision link1="drehkranz_link" link2="container_link" reason="Never"/>-->
+    <!--<base_link>-->
+    <disable_collision link1="base_link" link2="shoulder_link" reason="Adjacent"/>
+    <disable_collision link1="base_link" link2="upper_arm_link" reason="Never"/>
+    <disable_collision link1="base_link" link2="container_link" reason="Never"/>
+    <disable_collision link1="base_link" link2="table_link" reason="Never"/>
+    <disable_collision link1="base_link" link2="conveyBelt_link" reason="Never"/>
+    <disable_collision link1="base_link" link2="box_link" reason="Never"/>-->
+    <!--<shoulder_link>-->
+    <disable_collision link1="shoulder_link" link2="upper_arm_link" reason="Adjacent"/>
+    <disable_collision link1="shoulder_link" link2="table_link" reason="Never"/>
+    <disable_collision link1="shoulder_link" link2="conveyBelt_link" reason="Never"/>
+    <disable_collision link1="shoulder_link" link2="box_link" reason="Never"/>-->
+    <!--<upper_arm_link>-->
+    <disable_collision link1="upper_arm_link" link2="forearm_link" reason="Adjacent"/>-->
+    <!--<forearm_link>-->
+   <disable_collision link1="forearm_link" link2="wrist_1_link" reason="Adjacent"/>-->
+    <!--<wrist_1_link>-->
+    <disable_collision link1="wrist_1_link" link2="wrist_2_link" reason="Adjacent"/>-->
+    <!--<wrist_2_link>-->
+    <disable_collision link1="wrist_2_link" link2="wrist_3_link" reason="Adjacent"/>-->
+    <!--<wrist_3_link>-->
+
+</robot>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</robot>

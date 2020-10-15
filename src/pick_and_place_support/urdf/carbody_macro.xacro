@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<robot name="environment" xmlns:xacro="http://wiki.ros.org/xacro" >
+<xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+
+
+    <xacro:macro name="carbody_robot" params="prefix">
+    <!-- link list-->
+    <link name="${prefix}world"/>
+
+    <joint name="${prefix}carbody_joint" type="fixed">
+      <parent link="${prefix}world" />
+      <child link = "${prefix}carbody_link" />
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </joint>
+
+  <link name="${prefix}carbody_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://pick_and_place_support/meshes/visual/carbody.dae"/>
+      </geometry>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://pick_and_place_support/meshes/collision/carbody.stl" convert="false"/>
+      </geometry>
+    </collision>
+    <!--<collision_checking>
+      <geometry>
+        <convex_mesh filename="package://pick_and_place_support/meshes/carbody.stl" convert="false"/>
+      </geometry>
+    </collision_checking>-->
+    </link>
+
+      <joint name="${prefix}drehkranz_joint" type="revolute">
+          <parent link="${prefix}world"/>
+          <child link = "${prefix}drehkranz_link" />
+          <origin xyz="0.0 0.0 2.35" rpy="0.0 0.0 0.0" />
+          <axis xyz="0 0 1" />
+          <limit lower="-3.14" upper="3.14" effort="1000" velocity="20"/>
+
+      </joint>
+
+      <link name="${prefix}drehkranz_link">
+        <visual>
+            <origin xyz="0.02 -0.05 -2.35" rpy="0.0 0.0 0.0" />
+            <geometry>
+              <mesh filename="package://pick_and_place_support/meshes/visual/drehkranz.dae"/>
+            </geometry>
+            <material name="LightGrey">
+              <color rgba="0.7 0.7 0.7 1.0"/>
+            </material>
+         </visual>
+         <!--<collision>
+            <origin xyz="0.02 -0.05 -2.35" rpy="0.0 0.0 0.0" />
+            <geometry>
+               <mesh filename="package://pick_and_place_support/meshes/drehkranz.stl" convert="false"/>
+            </geometry>
+         </collision>-->
+        <collision_checking>
+           <origin xyz="0.02 -0.05 -2.35" rpy="0.0 0.0 0.0" />
+           <geometry>
+              <convex_mesh filename="package://pick_and_place_support/meshes/collision/drehkranz.stl" convert="false"/>
+           </geometry>
+        </collision_checking>
+      </link>
+
+      <joint name="${prefix}base_joint" type="fixed">
+        <parent link="${prefix}drehkranz_link" />
+        <child link = "${prefix}base_link" />
+        <origin xyz="0.511 0.016 -0.791" rpy="3.14 -0.0 -0.7850" />
+      </joint>
+
+
+
+     <link name="${prefix}container_link">
+        <visual>
+            <origin xyz="-1 0.95 1.2" rpy="3.14 0.0 0.0" />
+            <geometry>
+              <mesh filename="package://pick_and_place_support/meshes/visual/container.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="LightGrey">
+              <color rgba="0.1 0.1 0.0 1"/>
+            </material>
+      </visual>
+      <collision>
+           <origin xyz="-1 0.95 1.2" rpy="3.14 0.0 0.0" />
+           <geometry>
+              <mesh filename="package://pick_and_place_support/meshes/collision/container.stl" scale="0.001 0.001 0.001" convert="false"/>
+           </geometry>
+      </collision>
+      <!--<collision_checking>
+           <origin xyz="-1 0.95 1.2" rpy="3.14 0.0 0.0" />
+           <geometry>
+              <convex_mesh filename="package://pick_and_place_support/meshes/container.stl" scale="0.001 0.001 0.001" convert="false"/>
+           </geometry>
+      </collision_checking>-->
+      </link>
+
+     <joint name="${prefix}container_joint" type="fixed">
+
+        <parent link="${prefix}world" />
+        <child link = "${prefix}container_link" />
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      </joint>
+
+    <link name="${prefix}table_link">
+      <visual>
+          <origin xyz="-0.3 2.3 0" rpy="0.0 0.0 0.0" />
+          <geometry>
+            <mesh filename="package://pick_and_place_support/meshes/visual/table.dae" scale="1.5 1 1.5" />
+          </geometry>
+          <material name="LightGrey">
+            <color rgba="0.1 0.1 0.0 1"/>
+          </material>
+    </visual>
+    <collision_checking>
+         <origin xyz="-0.3 2.3 0" rpy="0.0 0.0 0.0" />
+         <geometry>
+            <convex_mesh filename="package://pick_and_place_support/meshes/collision/table.stl" scale="1.5 1 1.5" convert="false"/>
+         </geometry>
+    </collision_checking>
+    <!--<collision>
+         <origin xyz="-0.3 2.3 0" rpy="0.0 0.0 0.0" />
+         <geometry>
+            <mesh filename="package://pick_and_place_support/meshes/table.stl" scale="1.5 1 1.5" convert="false"/>
+         </geometry>
+    </collision>-->
+    </link>
+
+    <joint name="${prefix}table_world_joint" type="fixed">
+      <parent link="${prefix}world" />
+      <child link = "${prefix}table_link" />
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </joint>
+
+
+    <link name="${prefix}conveyBelt_link">
+      <visual>
+          <origin xyz="-0.4 1.65 0.5" rpy="0.0 0.0 0.0" />
+          <geometry>
+            <mesh filename="package://pick_and_place_support/meshes/visual/conveyBelt.dae" scale="1.5 1.2 1.5"/>
+          </geometry>
+          <material name="LightGrey">
+            <color rgba="0.1 0.1 0.0 1"/>
+          </material>
+    </visual>
+    <!--<collision_checking>
+         <origin xyz="-0.4 1.65 0.5" rpy="0.0 0.0 0.0" />
+         <geometry>
+            <mesh filename="package://pick_and_place_support/meshes/conveyBelt.stl" scale="1.5 1.2 1.5" convert="false"/>
+         </geometry>
+    </collision_checking>-->
+    <collision>
+         <origin xyz="-0.4 1.65 0.5" rpy="0.0 0.0 0.0" />
+         <geometry>
+            <mesh filename="package://pick_and_place_support/meshes/collision/conveyBelt.stl" scale="1.5 1.2 1.5" convert="false"/>
+         </geometry>
+    </collision>
+    </link>
+    <joint name="${prefix}conveyBelt_table_joint" type="fixed">
+      <parent link="${prefix}table_link" />
+      <child link = "${prefix}conveyBelt_link" />
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </joint>
+
+    <link name="${prefix}greifer_link">
+      <visual>
+          <origin xyz="-0.35 0.3 0.02" rpy="0.0 0.0 0.0" />
+          <geometry>
+            <mesh filename="package://pick_and_place_support/meshes/visual/greifer.dae" scale="1 1 1"/>
+          </geometry>
+          <material name="LightGrey">
+            <color rgba="0.1 0.1 0.0 1"/>
+          </material>
+    </visual>
+    <collision_checking>
+         <origin xyz="-0.35 0.3 0.02" rpy="0.0 0.0 0.0" />
+         <geometry>
+            <mesh filename="package://pick_and_place_support/meshes/collision/greifer.stl" scale="1 1 1" convert="false"/>
+         </geometry>
+    </collision_checking>
+    </link>
+    <joint name="${prefix}greifer_wrist_3_link_joint" type="fixed">
+      <parent link="${prefix}wrist_3_link" />
+      <child link = "${prefix}greifer_link" />
+      <origin xyz="0.0 0.3 0.0" rpy="1.57 -0.785 0.0" />
+    </joint>
+
+      <!--end of link list-->
+      </xacro:macro>
+</robot>
